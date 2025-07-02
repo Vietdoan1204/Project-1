@@ -18,7 +18,9 @@ function Board({ setScore, resetFlag }) {
   // Reset board khi resetFlag thay đổi
   useEffect(() => {
     setBoard(addRandomTile(addRandomTile(createEmptyBoard())));
-    setScore && setScore(0);
+    if (setScore) {
+      setScore(0);
+    }
   }, [resetFlag, setScore]);
 
   useEffect(() => {
@@ -53,6 +55,18 @@ function Board({ setScore, resetFlag }) {
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [board, setScore]);
 
+  const tiles = [];
+  for (let rowIndex = 0; rowIndex < board.length; rowIndex++) {
+    for (let colIndex = 0; colIndex < board[rowIndex].length; colIndex++) {
+      tiles.push(
+        <Tile
+          key={`${rowIndex}-${colIndex}`}
+          value={board[rowIndex][colIndex]}
+        />
+      );
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -67,11 +81,7 @@ function Board({ setScore, resetFlag }) {
         margin: '0 auto',
       }}
     >
-      {board.map((row, rowIndex) =>
-        row.map((value, colIndex) => (
-          <Tile key={`${rowIndex}-${colIndex}`} value={value} />
-        ))
-      )}
+      {tiles}
     </Box>
   );
 }
