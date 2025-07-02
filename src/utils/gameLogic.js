@@ -1,9 +1,21 @@
+export const BOARD_SIZE = 4;
+
+// export function createEmptyBoard() {
+//   return [
+//     [0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0],
+//     [0, 0, 0, 0, 0],
+//   ];
+// }
+
 export function createEmptyBoard() {
   return [
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
-    [0, 0, 0, 0],
+    [0, 0, 0, 0,],
+    [0, 0, 0, 0,],
+    [0, 0, 0, 0,],
+    [0, 0, 0, 0,],
   ];
 }
 
@@ -13,8 +25,8 @@ export function getRandomInt(min, max) {
 
 export function addRandomTile(board) {
   const emptyCells = [];
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let j = 0; j < BOARD_SIZE; j++) {
       if (board[i][j] === 0) emptyCells.push([i, j]);
     }
   }
@@ -32,7 +44,7 @@ export function moveLeft(board) {
   let moved = false;
   let score = 0;
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < BOARD_SIZE; i++) {
     let row = newBoard[i].filter(val => val !== 0);
     for (let j = 0; j < row.length - 1; j++) {
       if (row[j] === row[j + 1]) {
@@ -43,7 +55,7 @@ export function moveLeft(board) {
       }
     }
     row = row.filter(val => val !== 0);
-    while (row.length < 4) row.push(0);
+    while (row.length < BOARD_SIZE) row.push(0);
     if (row.some((val, idx) => val !== newBoard[i][idx])) moved = true;
     newBoard[i] = row;
   }
@@ -55,7 +67,7 @@ export function moveRight(board) {
   let moved = false;
   let score = 0;
 
-  for (let i = 0; i < 4; i++) {
+  for (let i = 0; i < BOARD_SIZE; i++) {
     let row = newBoard[i].filter(val => val !== 0);
     for (let j = row.length - 1; j > 0; j--) {
       if (row[j] === row[j - 1]) {
@@ -66,7 +78,7 @@ export function moveRight(board) {
       }
     }
     row = row.filter(val => val !== 0);
-    while (row.length < 4) row.unshift(0);
+    while (row.length < BOARD_SIZE) row.unshift(0);
     if (row.some((val, idx) => val !== newBoard[i][idx])) moved = true;
     newBoard[i] = row;
   }
@@ -78,9 +90,9 @@ export function moveUp(board) {
   let moved = false;
   let score = 0;
 
-  for (let col = 0; col < 4; col++) {
+  for (let col = 0; col < BOARD_SIZE; col++) {
     let column = [];
-    for (let row = 0; row < 4; row++) {
+    for (let row = 0; row < BOARD_SIZE; row++) {
       if (newBoard[row][col] !== 0) column.push(newBoard[row][col]);
     }
     for (let i = 0; i < column.length - 1; i++) {
@@ -92,8 +104,8 @@ export function moveUp(board) {
       }
     }
     column = column.filter(val => val !== 0);
-    while (column.length < 4) column.push(0);
-    for (let row = 0; row < 4; row++) {
+    while (column.length < BOARD_SIZE) column.push(0);
+    for (let row = 0; row < BOARD_SIZE; row++) {
       if (newBoard[row][col] !== column[row]) moved = true;
       newBoard[row][col] = column[row];
     }
@@ -106,9 +118,9 @@ export function moveDown(board) {
   let moved = false;
   let score = 0;
 
-  for (let col = 0; col < 4; col++) {
+  for (let col = 0; col < BOARD_SIZE; col++) {
     let column = [];
-    for (let row = 0; row < 4; row++) {
+    for (let row = 0; row < BOARD_SIZE; row++) {
       if (newBoard[row][col] !== 0) column.push(newBoard[row][col]);
     }
     for (let i = column.length - 1; i > 0; i--) {
@@ -120,8 +132,8 @@ export function moveDown(board) {
       }
     }
     column = column.filter(val => val !== 0);
-    while (column.length < 4) column.unshift(0);
-    for (let row = 0; row < 4; row++) {
+    while (column.length < BOARD_SIZE) column.unshift(0);
+    for (let row = 0; row < BOARD_SIZE; row++) {
       if (newBoard[row][col] !== column[row]) moved = true;
       newBoard[row][col] = column[row];
     }
@@ -130,8 +142,8 @@ export function moveDown(board) {
 }
 
 export function canMove(board) {
-  for (let i = 0; i < 4; i++) {
-    for (let j = 0; j < 4; j++) {
+  for (let i = 0; i < BOARD_SIZE; i++) {
+    for (let j = 0; j < BOARD_SIZE; j++) {
       if (board[i][j] === 0) return true;
       if (j < 3 && board[i][j] === board[i][j + 1]) return true;
       if (i < 3 && board[i][j] === board[i + 1][j]) return true;

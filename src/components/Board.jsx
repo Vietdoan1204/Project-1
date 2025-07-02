@@ -8,7 +8,8 @@ import {
   moveDown,
   addRandomTile,
   canMove,
-  createEmptyBoard
+  createEmptyBoard,
+  BOARD_SIZE,
 } from "../utils/gameLogic";
 
 function Board({ setScore, resetFlag }) {
@@ -56,8 +57,8 @@ function Board({ setScore, resetFlag }) {
     <Box
       sx={{
         display: 'grid',
-        gridTemplateColumns: 'repeat(4, 100px)',
-        gridTemplateRows: 'repeat(4, 100px)',
+        gridTemplateColumns: `repeat(${BOARD_SIZE}, 100px)`,
+        gridTemplateRows: `repeat(${BOARD_SIZE}, 100px)`,
         gap: '15px',
         backgroundColor: '#bbada0',
         padding: '15px',
